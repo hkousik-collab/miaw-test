@@ -1,46 +1,74 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Agentforce Test – GitHub Pages</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <title>Agentforce Test – GitHub Pages</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
-  <meta name="robots" content="noindex,nofollow" />
-    <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' https: data: blob:;
-             script-src 'self' https: 'unsafe-inline' 'unsafe-eval';
-             connect-src 'self' https: wss:;
-             img-src 'self' https: data: blob:;
-             style-src 'self' 'unsafe-inline' https:;
-             frame-src https:;
-             font-src 'self' https: data:;">
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:2rem}
-    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;max-width:760px}
-    .muted{color:#6b7280;font-size:.95rem}
-    button{padding:.6rem 1rem;border-radius:8px;border:1px solid #d1d5db;cursor:pointer}
-  </style>
+  <meta name="robots" content="noindex,nofollow" />
+  <!-- See Step 1 for why this CSP is needed -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' https: data: blob:;
+             script-src 'self' https: 'unsafe-inline' 'unsafe-eval';
+             connect-src 'self' https: wss:;
+             img-src 'self' https: data: blob:;
+             style-src 'self' 'unsafe-inline' https:;
+             frame-src https:;
+             font-src 'self' https: data:;">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:2rem}
+    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;max-width:760px}
+    .muted{color:#6b7280;font-size:.95rem}
+    button{padding:.6rem 1rem;border-radius:8px;border:1px solid #d1d5db;cursor:pointer}
+  </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Agentforce (MIAW) – Test Page</h1>
-    <p class="muted">Hosted on GitHub Pages. Not indexed. Use for safe agent testing.</p>
-    <p>
-      <button onclick="openChat()">Open Chat</button>
-      <button onclick="location.reload()">Hard Refresh</button>
-    </p>
-    <pre id="log" class="muted"></pre>
-  </div>
+  <div class="card">
+    <h1>Agentforce (MIAW) – Test Page</h1>
+    <p class="muted">Hosted on GitHub Pages. Not indexed. Use for safe agent testing.</p>
+    <p>
+      <button onclick="openChat()">Open Chat</button>
+      <button onclick="location.reload()">Hard Refresh</button>
+    </p>
+    <pre id="log" class="muted"></pre>
+  </div>
 
-    <script type='text/javascript'>
+  <!-- 🔽 Paste the official Messaging web snippet from Salesforce here (verbatim) 🔽 -->
+  <script type='text/javascript'>
 	function initEmbeddedMessaging() {
 		try {
 			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
-	@@ -52,21 +50,40 @@ <h1>Agentforce (MIAW) – Test Page</h1>
+
+			embeddedservice_bootstrap.init(
+				'00DOg000001Vluv',
+				'ONZ_Messaging_Web',
+				'https://onz--dcaidev.sandbox.my.site.com/ESWONZMessagingWeb1757919743068',
+				{
+					scrt2URL: 'https://onz--dcaidev.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
 		}
 	};
 </script>
-<script>
+<script type='text/javascript' src='https://onz--dcaidev.sandbox.my.site.com/ESWONZMessagingWeb1757919743068/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+
+  <script>
+    function openChat(){
+      try{
+        if (window.embeddedservice_bootstrap?.utilAPI){
+          embeddedservice_bootstrap.utilAPI.api.openChat();
+          log('openChat() called.');
+        } else {
+          log('Bootstrap not ready yet. Try again in a second.');
+        }
+      }catch(e){ log('openChat error: ' + e.message); }
+    }
+    function log(msg){ document.getElementById('log').textContent += msg + '\n'; }
+  </script>
+	<script>
 	window.addEventListener("onEmbeddedMessagingReady", () => {
 	  console.log("Received onEmbeddedMessagingReady");
 	  embeddedservice_bootstrap.events.subscribe(
@@ -59,21 +87,5 @@
 	  );
 	});
   </script>
-<script type='text/javascript' src='https://onz--dcaidev.sandbox.my.site.com/ESWONZMessagingWeb1757919743068/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
-
-
-  <script>
-    function openChat(){
-      try{
-        if (window.embeddedservice_bootstrap?.utilAPI){
-          embeddedservice_bootstrap.utilAPI.api.openChat();
-          log('openChat() called.');
-        } else {
-          log('Bootstrap not ready yet. Try again in a second.');
-        }
-      }catch(e){ log('openChat error: ' + e.message); }
-    }
-    function log(msg){ document.getElementById('log').textContent += msg + '\n'; }
-  </script>
 </body>
 </html>
