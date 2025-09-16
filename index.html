@@ -34,7 +34,6 @@
   </div>
 
   <!-- 🔽 Paste the official Messaging web snippet from Salesforce here (verbatim) 🔽 -->
-
   <script type='text/javascript'>
 	function initEmbeddedMessaging() {
 		try {
@@ -53,7 +52,7 @@
 		}
 	};
 </script>
-
+<script type='text/javascript' src='https://onz--dcaidev.sandbox.my.site.com/ESWONZMessagingWeb1757919743068/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 
 
   <script>
@@ -69,25 +68,5 @@
     }
     function log(msg){ document.getElementById('log').textContent += msg + '\n'; }
   </script>
-	<script>
-	window.addEventListener("onEmbeddedMessagingReady", () => {
-	  console.log("Received onEmbeddedMessagingReady");
-	  embeddedservice_bootstrap.events.subscribe(
-		"CHASITOR_BOT_TYPING",
-		() => {
-		  console.log("Bot is typing");
-		  embeddedservice_bootstrap.settings.enableUserInputForConversationWithBot = false;
-		}
-	  );
-	  embeddedservice_bootstrap.events.subscribe(
-		"CHASITOR_BOT_NOT_TYPING",
-		() => {
-		  console.log("Bot stopped typing");
-		  embeddedservice_bootstrap.settings.enableUserInputForConversationWithBot = true;
-		}
-	  );
-	});
-  </script>
-<script type='text/javascript' src='https://onz--dcaidev.sandbox.my.site.com/ESWONZMessagingWeb1757919743068/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>	
 </body>
 </html>
